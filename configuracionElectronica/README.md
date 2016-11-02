@@ -5,6 +5,7 @@ Para correrlo debes ejecutar el comando de ejecución y pasarle como parametro e
 ![arbol](https://github.com/ingelectronicadj/nanotecnologia/blob/master/configuracionElectronica/electronConfiguration.jpg?raw=true "particulas")
 
 ## Secuencia
-![secuencia](https://github.com/ingelectronicadj/nanotecnologia/blob/master/configuracionElectronica/electronConfiguration.jpg?raw=true "secuencia")
+![secuencia](https://github.com/ingelectronicadj/nanotecnologia/blob/master/configuracionElectronica/configuracion.GIF?raw=true "secuencia")
 
 ## Ejemplos en terminal
+![terminal](https://github.com/ingelectronicadj/nanotecnologia/blob/master/configuracionElectronica/sobreTerminal.png?raw=true "terminal")
