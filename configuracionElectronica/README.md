@@ -1,3 +1,5 @@
+Agradecimientos a jacobstein123
+
 # Python 2.7
 Para correrlo debes ejecutar el comando de ejecución y pasarle como parametro el numero atomico del elemento a estudiar
 
