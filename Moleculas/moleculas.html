@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>three.js css3d - moleculas</title>
+		<title>UDistrital - Moleculas .pdb</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -92,7 +92,7 @@
 		<script src="js/loaders/PDBLoader.js"></script>
 
 		<div id="container"></div>
-		<div id="info"><a href="http://threejs.org" target="_blank">three.js css3d</a> - moleculas</div>
+		<div id="info"><a href="http://threejs.org" target="_blank">three.js css3d</a> <br /> Interfaz para visualización de moleculas .pdb</div>
 		<div id="topmenu">
 			<button id="b_a">Atomos</button>
 			<button id="b_b">Estructura</button>
@@ -114,26 +114,35 @@
 			var visualizationType = 2;
 
 			var MOLECULES = {
-				"Etanol": "ethanol.pdb",
+				/*"Etanol": "ethanol.pdb",
 				"Aspirina": "aspirin.pdb",
 				"Cafeina": "caffeine.pdb",
 				"Nicotina": "nicotine.pdb",
+				"THC": "3ls5.pdb",
 				"LSD": "lsd.pdb",
 				"Cocaina": "cocaine.pdb",
 				"Colesterol": "cholesterol.pdb",
 				"Licopeno": "lycopene.pdb",
 				"Glucosa": "glucose.pdb",
-				"Oxido de aluminio": "Al2O3.pdb",
 				"Cubane": "cubane.pdb",
-				"Cobre": "cu.pdb",
 				"Fluorita": "caf2.pdb",
-				"Sal": "nacl.pdb",
-				"YBCO superconductor": "ybco.pdb",
-				"Fulereno": "buckyball.pdb",
+				"Sal": "nacl.pdb",*/
+				//Formas alotropicas del carbono
+				//Geometria tetraedrica --> Metano
+				//Geometria Lineal: Carbino
+				"Fulereno": "buckyball.pdb", //Fulereno Carbono 60, 240, 540, (min 20 atomos para ser un fulereno)
+				//nanocebolla, nanoguisantes
+				// matalofullerenos: fulerenos ectohedricos, fulereno exoedrico (parecidos a los virus)
+				// Fayman, Sumio Ijima: nanotubos de carbono de pared simple o de pared multiple
+				// Nanotubo anidado - nano alambres
+				// Nanotubo Brazo de silla (metalicos)
+				// nanotubo Zig Zag(semiconductores)
+				// nanotubo quiral
+				"Grafito": "graphite.pdb", // Geometria trigonal - sustrato para fabricar diamantes
 				"Diamante": "diamond.pdb",
-				"THC": "3ls5.pdb",
-				"Grafeno": "graphite.pdb",
-				//"Lipidos": "dppc64.pdb"
+				"YBCO superconductor": "ybco.pdb",
+				"Oxido de aluminio": "Al2O3.pdb",
+				"Cobre": "cu.pdb"
 			};
 
 			var loader = new THREE.PDBLoader();
