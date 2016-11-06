@@ -1,580 +1,602 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>UDistrital - Moleculas .pdb</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			html, body {
-				height: 100%;
-			}
 
-			body {
-				background-color: #050505;
+<head>
+	<title>UDistrital - Moleculas .pdb</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+		html,
+		body {
+			height: 100%;
+		}
 
-				background: rgb(43,45,48); /* Old browsers */
-				background: -moz-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%, rgba(0,0,0,1) 100%); /* FF3.6+ */
-				background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(43,45,48,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
-				background: -webkit-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* Opera 12+ */
-				background: -ms-radial-gradient(center, ellipse cover,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* IE10+ */
-				background: radial-gradient(ellipse at center,  rgba(43,45,48,1) 0%,rgba(0,0,0,1) 100%); /* W3C */
+		body {
+			background-color: #050505;
+			background: rgb(43, 45, 48);
+			/* Old browsers */
+			background: -moz-radial-gradient(center, ellipse cover, rgba(43, 45, 48, 1) 0%, rgba(0, 0, 0, 1) 100%);
+			/* FF3.6+ */
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(43, 45, 48, 1)), color-stop(100%, rgba(0, 0, 0, 1)));
+			/* Chrome,Safari4+ */
+			background: -webkit-radial-gradient(center, ellipse cover, rgba(43, 45, 48, 1) 0%, rgba(0, 0, 0, 1) 100%);
+			/* Chrome10+,Safari5.1+ */
+			background: -o-radial-gradient(center, ellipse cover, rgba(43, 45, 48, 1) 0%, rgba(0, 0, 0, 1) 100%);
+			/* Opera 12+ */
+			background: -ms-radial-gradient(center, ellipse cover, rgba(43, 45, 48, 1) 0%, rgba(0, 0, 0, 1) 100%);
+			/* IE10+ */
+			background: radial-gradient(ellipse at center, rgba(43, 45, 48, 1) 0%, rgba(0, 0, 0, 1) 100%);
+			/* W3C */
+			margin: 0;
+			font-family: Arial;
+			overflow: hidden;
+		}
 
-				margin: 0;
-				font-family: Arial;
-				overflow: hidden;
-			}
+		a {
+			color: #ffffff;
+		}
 
-			a {
-				color: #ffffff;
-			}
+		#info {
+			position: absolute;
+			top: 0px;
+			width: 100%;
+			color: #ffffff;
+			padding: 5px;
+			font-family: Monospace;
+			font-size: 13px;
+			font-weight: bold;
+			text-align: center;
+			z-index: 1;
+		}
 
-			#info {
-				position: absolute;
-				top: 0px;
-				width: 100%;
-				color: #ffffff;
-				padding: 5px;
-				font-family: Monospace;
-				font-size: 13px;
-				font-weight: bold;
-				text-align: center;
-				z-index: 1;
-			}
+		#menu {
+			position: absolute;
+			bottom: 20px;
+			width: 100%;
+			text-align: center;
+			padding: 0;
+			margin: 0;
+		}
 
-			#menu {
-				position: absolute;
-				bottom: 20px;
-				width: 100%;
-				text-align: center;
-				padding: 0;
-				margin: 0;
-			}
+		#topmenu {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			width: 100%;
+			text-align: right;
+			padding: 0;
+			margin: 0;
+			z-index: 1;
+		}
 
-			#topmenu {
-				position: absolute;
-				top: 10px;
-				right: 10px;
-				width: 100%;
-				text-align: right;
-				padding: 0;
-				margin: 0;
-				z-index: 1;
-			}
+		button {
+			color: rgb(255, 255, 255);
+			background: transparent;
+			border: 0px;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
 
-			button {
-				color: rgb(255,255,255);
-				background: transparent;
-				border: 0px;
-				padding: 5px 10px;
-				cursor: pointer;
-			}
-			button:hover {
-				background-color: rgba(0,255,255,0.5);
-			}
-			button:active {
-				color: #000000;
-				background-color: rgba(0,255,255,1);
-			}
+		button:hover {
+			background-color: rgba(0, 255, 255, 0.5);
+		}
 
-			.bond {
-				width: 5px;
-				height: 10px;
-				background: #eee;
-				display: block;
-			}
-		</style>
-	</head>
-	<body>
-		<script src="build/three.js"></script>
-		<script src="js/controls/TrackballControls.js"></script>
-		<script src="js/renderers/CSS3DRenderer.js"></script>
-		<script src="js/loaders/PDBLoader.js"></script>
+		button:active {
+			color: #000000;
+			background-color: rgba(0, 255, 255, 1);
+		}
 
-		<div id="container"></div>
-		<div id="info"><a href="http://threejs.org" target="_blank">three.js css3d</a> <br /> Interfaz para visualización de moleculas .pdb</div>
-		<div id="topmenu">
-			<br />
-			<br />
-			<br />
-			<button id="b_a">Atomos</button>
-			<button id="b_b">Estructura</button>
-			<button id="b_ab">Atomos + Estructura</button>
-		</div>
-		<div id="menu"></div>
+		.bond {
+			width: 5px;
+			height: 10px;
+			background: #eee;
+			display: block;
+		}
+	</style>
+</head>
 
-		<script>
-			var camera, scene, renderer;
-			var controls;
-			var root;
+<body>
+	<script src="build/three.js"></script>
+	<script src="js/controls/TrackballControls.js"></script>
+	<script src="js/renderers/CSS3DRenderer.js"></script>
+	<script src="js/loaders/PDBLoader.js"></script>
 
-			var objects = [];
-			var tmpVec1 = new THREE.Vector3();
-			var tmpVec2 = new THREE.Vector3();
-			var tmpVec3 = new THREE.Vector3();
-			var tmpVec4 = new THREE.Vector3();
+	<div id="container"></div>
+	<div id="info"><a href="http://threejs.org" target="_blank">three.js css3d</a> <br /> Interfaz para visualización de moleculas .pdb</div>
+	<div id="topmenu">
+		<br />
+		<br />
+		<br />
+		<button id="b_a">Atomos</button>
+		<button id="b_b">Estructura</button>
+		<button id="b_ab">Atomos + Estructura</button>
+	</div>
+	<div id="menu"></div>
 
-			var visualizationType = 2;
+	<script>
+		var camera, scene, renderer;
+		var controls;
+		var root;
 
-			var MOLECULES = {
-				/*"Etanol": "ethanol.pdb",
-				"Aspirina": "aspirin.pdb",
-				"Cafeina": "caffeine.pdb",
-				"Nicotina": "nicotine.pdb",
-				"LSD": "lsd.pdb",
-				"Cocaina": "cocaine.pdb",
-				"Novocaina": "novocaine.pdb",
-				"Colesterol": "cholesterol.pdb",
-				"Licopeno": "lycopene.pdb",
-				"Glucosa": "glucose.pdb",
-				"Cubane": "cubane.pdb",
-				"Fluorita": "caf2.pdb",
-				"Salicilato de metilo": "wintergreen.pdb", //Usado en fragancias - aceites
-				"Sal": "nacl.pdb",
-				"Vitamina B12": "vitamin-b12.pdb",
-				"Almidón": "starch.pdb",
-				"Fluoxetina": "prozac-s.pdb", //Antidepresivo
-				"PMMA": "pmma.pdb", //Polimetilmetacrilato-Plasticos de Ingenieria
-				"Nylon": "nylon.pdb",
-				"Amoxicilina": "amoxicillin.pdb", //Solo Atomos
-				"Acetaminofen": "acetaminophen.pdb", //Solo atomos
-				"Manzana": "apple.pdb",
-				"Pera": "pear.pdb",
-				"Plátano": "banana.pdb",
-				"bcfi metano": "bcfimethane.pdb",
-				"Aspartamo": "aspartame.pdb", //Solo Atomos
-				"Benadryl": "benadryl.pdb", //Medicamento - Solo Atomos
-				"Benceno": "benzene.pdb", //Solo Atomos
-				"Benzocaina": "benzocaine.pdb", //Solo Atomos
-				"Chevere": "caf2.pdb",
-				"Capsaicina": "capsaicin.pdb", //Solo Atomos
-				"Caraway": "caraway.pdb", //Solo Atomos
-				"Ciclonita": "cyclonite.pdb", //Solo Atomos - Aplicaciones Militares
-				"Chevere2": "cynac.pdb",
-				"DDT": "ddt.pdb", //Solo Atomos
-				"Nitroglicerina": "nitroglycerin.pdb", //Solo Atomos
-				"Histamina": "histamine.pdb", //Solo Atomos - Neurotrasmisor
-				"Hexametilhexano": "hexamethylethane.pdb", //Solo Atomos
-				"Malation": "malathion.pdb", //Solo Atomos - insecticida
-				"Pentano": "pentane.pdb", //Solo Atomos
-				"Ranitidina": "ranitidine.pdb", //Solo Atomos - inhibe la producción de ácido gástrico
-				"Etorfina": "etorphine.pdb", //Solo Atomos - capacidad analgésica 3000 veces mas potente que la morfina
-				"Acetileno": "ethyne.pdb", //Solo Atomos - De gran importancia industrial
-				"Estradiol": "estradiol.pdb", //hormona esteroide sexual femenina
-				"Decane": "decane.pdb", //Solo Atomos - alcano de hidrocarburos
-				"Estricnina": "strychnine.pdb", //Somo Atomos - pesticida para vertebrados
-				"Serotonina": "serotonin.pdb", //Solo Atomos - Neurotransmisor
-				"Testosterona": "testosterone.pdb", //Solo Atomos
-				"Sacarosa": "sucrose.pdb", //Solo Atomos
-				"TNT": "tnt.pdb", //Solo Atomos
-				"Vanilina": "vanillin.pdb", //Solo Atomos
-				"Vit-C": "vit-c.pdb", //Solo Atomos
-				"Vit-E": "vit-e.pdb", //Solo Atomos
-				"Carvona": "spearmint.pdb", //Solo Atomos - Se encuentra en casi todos los aceites escenciales
-				"Deltametrina": "deltamethrin.pdb", //Piretroide sintético con actividad insecticida
-				"Eritromicina": "erythromycin.pdb", //primer macrólido descubierto
-				"MCA": "mca.pdb",
-				"MMA": "mma.pdb",
+		var objects = [];
+		var tmpVec1 = new THREE.Vector3();
+		var tmpVec2 = new THREE.Vector3();
+		var tmpVec3 = new THREE.Vector3();
+		var tmpVec4 = new THREE.Vector3();
 
-				*/
-				//"DNA": "DNA.pdb",
-				//Formas alotropicas del carbono
-				//Geometria tetraedrica --> Metano
-				//Geometria Lineal: Carbino
-				"Fulereno": "buckyball.pdb", //Fulereno Carbono 60, 240, 540, (min 20 atomos para ser un fulereno)
-				"Doble Fulereno": "dodecahedrane.pdb",
-				//nanocebolla, nanoguisantes
-				// matalofullerenos: fulerenos ectohedricos, fulereno exoedrico (parecidos a los virus)
-				// Fayman, Sumio Ijima: nanotubos de carbono de pared simple o de pared multiple
-				// Nanotubo anidado - nano alambres
-				// Nanotubo Brazo de silla (metalicos)
-				// nanotubo Zig Zag(semiconductores)
-				// nanotubo quiral
-				"Grafito": "graphite.pdb", // Geometria trigonal - sustrato para fabricar diamantes
-				"Diamante": "diamond.pdb",
-				"YBCO superconductor": "ybco.pdb",
-				"Oxido de aluminio": "Al2O3.pdb",
-				"Cobre": "cu.pdb"
+		var visualizationType = 2;
+
+		var MOLECULES = {
+			/********************Solo Atomos******************/
+			"Aspartamo": "aspartame.pdb",
+			"Benadryl": "benadryl.pdb", //Medicamento
+			"Benceno": "benzene.pdb",
+			"Benzocaina": "benzocaine.pdb",
+			"Amoxicilina": "amoxicillin.pdb",
+			"Acetaminofen": "acetaminophen.pdb",
+			"Capsaicina": "capsaicin.pdb",
+			"Caraway": "caraway.pdb",
+			"Ciclonita": "cyclonite.pdb", //Aplicaciones Militares
+			"Ranitidina": "ranitidine.pdb", //inhibe la producción de ácido gástrico
+			"Etorfina": "etorphine.pdb", //capacidad analgésica 3000 veces mas potente que la morfina
+			"Acetileno": "ethyne.pdb", //De gran importancia industrial
+			"Decane": "decane.pdb", //alcano de hidrocarburos
+			"Estricnina": "strychnine.pdb", //Pesticida para vertebrados
+			"Serotonina": "serotonin.pdb", //Neurotransmisor
+			"Testosterona": "testosterone.pdb",
+			"Estradiol": "estradiol.pdb", //hormona esteroide sexual femenina
+			"Sacarosa": "sucrose.pdb",
+			"TNT": "tnt.pdb",
+			"Vanilina": "vanillin.pdb",
+			"Vit-C": "vit-c.pdb",
+			"Vit-E": "vit-e.pdb",
+			"Carvona": "spearmint.pdb", //Se encuentra en casi todos los aceites escenciales
+			"DDT": "ddt.pdb",
+			"Nitroglicerina": "nitroglycerin.pdb",
+			"Histamina": "histamine.pdb", //Neurotrasmisor
+			"Hexametilhexano": "hexamethylethane.pdb",
+			"Malation": "malathion.pdb", //Insecticida
+			"Pentano": "pentane.pdb",
+			"Novocaina": "novocaine.pdb",
+
+			/********************Atomos + Estructura******************/
+			"Etanol": "ethanol.pdb",
+			"Aspirina": "aspirin.pdb",
+			"Cafeina": "caffeine.pdb",
+			"Nicotina": "nicotine.pdb",
+			"LSD": "lsd.pdb",
+			"Cocaina": "cocaine.pdb",
+			"Colesterol": "cholesterol.pdb",
+			"Licopeno": "lycopene.pdb",
+			"Glucosa": "glucose.pdb",
+			"Cubane": "cubane.pdb",
+			"Fluorita": "caf2.pdb",
+			"Salicilato de metilo": "wintergreen.pdb", //Usado en fragancias y perfumes
+			"Sal": "nacl.pdb",
+			"Vitamina B12": "vitamin-b12.pdb",
+			"Almidón": "starch.pdb",
+			"Fluoxetina": "prozac-s.pdb", //Antidepresivo
+			"PMMA": "pmma.pdb", //Polimetilmetacrilato-Plasticos de Ingenieria
+			"Nylon": "nylon.pdb",
+			"Manzana": "apple.pdb",
+			"Pera": "pear.pdb",
+			"Plátano": "banana.pdb",
+			"cynac": "cynac.pdb",
+			"Deltametrina": "deltamethrin.pdb", //Piretroide sintético con actividad insecticida
+			"Eritromicina": "erythromycin.pdb", //primer macrólido descubierto
+			"MCA": "mca.pdb",
+			"MMA": "mma.pdb",
+
+			/********************Formas alotropicas del carbono******************/
+			"bcfi metano": "bcfimethane.pdb", //Geometria tetraedrica --> Metano
+			"Fulereno": "buckyball.pdb", //Fulereno Carbono 60, 240, 540, (min 20 atomos para ser un fulereno)
+			"Doble Fulereno": "dodecahedrane.pdb", // matalofullerenos: fulerenos ectohedricos, fulereno exoedrico (parecidos a los virus)
+			//nanocebolla, nanoguisantes
+			// Fayman, Sumio Ijima: nanotubos de carbono de pared simple o de pared multiple
+			// Nanotubo anidado - nano alambres
+			// Nanotubo Brazo de silla (metalicos)
+			// nanotubo Zig Zag(semiconductores)
+			// nanotubo quiral
+			"Grafito": "graphite.pdb", // Geometria trigonal - sustrato para fabricar diamantes
+			"Diamante": "diamond.pdb",
+			"YBCO superconductor": "ybco.pdb",
+			"Oxido de aluminio": "Al2O3.pdb",
+			"Cobre": "cu.pdb",
+			"DNA": "dna.pdb"
+		};
+
+		var loader = new THREE.PDBLoader();
+		var colorSpriteMap = {};
+		var baseSprite = document.createElement('img');
+
+		var menu = document.getElementById("menu");
+
+		init();
+		animate();
+
+		function init() {
+
+			camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 5000);
+			camera.position.z = 1500;
+
+			scene = new THREE.Scene();
+
+			root = new THREE.Object3D();
+			scene.add(root);
+
+			//
+
+			renderer = new THREE.CSS3DRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			document.getElementById('container').appendChild(renderer.domElement);
+
+			//
+
+			controls = new THREE.TrackballControls(camera, renderer.domElement);
+			controls.rotateSpeed = 0.5;
+			controls.addEventListener('change', render);
+
+			//
+
+			baseSprite.onload = function() {
+
+				loadMolecule("molecules/nacl.pdb");
+				createMenu();
+
 			};
 
-			var loader = new THREE.PDBLoader();
-			var colorSpriteMap = {};
-			var baseSprite = document.createElement( 'img' );
-
-			var menu = document.getElementById( "menu" );
-
-			init();
-			animate();
-
-			function init() {
-
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 5000 );
-				camera.position.z = 1500;
-
-				scene = new THREE.Scene();
-
-				root = new THREE.Object3D();
-				scene.add( root );
-
-				//
-
-				renderer = new THREE.CSS3DRenderer();
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				document.getElementById( 'container' ).appendChild( renderer.domElement );
-
-				//
-
-				controls = new THREE.TrackballControls( camera, renderer.domElement );
-				controls.rotateSpeed = 0.5;
-				controls.addEventListener( 'change', render );
-
-				//
-
-				baseSprite.onload = function () {
-
-					loadMolecule( "molecules/nacl.pdb" );
-					createMenu();
-
-				};
-
-				baseSprite.src = 'textures/sprites/ball.png';
-
-				//
-
-				window.addEventListener( 'resize', onWindowResize, false );
-
-			}
+			baseSprite.src = 'textures/sprites/ball.png';
 
 			//
 
-			function generateButtonCallback( url ) {
+			window.addEventListener('resize', onWindowResize, false);
 
-				return function ( event ) {
+		}
 
-					loadMolecule( url );
+		//
 
-				}
+		function generateButtonCallback(url) {
 
-			}
+			return function(event) {
 
-			function createMenu() {
-
-				for ( var m in MOLECULES ) {
-
-					var button = document.createElement( 'button' );
-					button.innerHTML = m;
-					menu.appendChild( button );
-
-					var url = "molecules/" +  MOLECULES[ m ];
-
-					button.addEventListener( 'click', generateButtonCallback( url ), false );
-
-				}
-
-				var b_a = document.getElementById( "b_a" );
-				var b_b = document.getElementById( "b_b" );
-				var b_ab = document.getElementById( "b_ab" );
-
-				b_a.addEventListener( 'click', function() { visualizationType = 0; showAtoms() } );
-				b_b.addEventListener( 'click', function() { visualizationType = 1; showBonds() } );
-				b_ab.addEventListener( 'click', function() { visualizationType = 2; showAtomsBonds() } );
+				loadMolecule(url);
 
 			}
 
-			//
+		}
 
-			function showAtoms() {
+		function createMenu() {
 
-				for ( var i = 0; i < objects.length; i ++ ) {
+			for (var m in MOLECULES) {
 
-					var object = objects[ i ];
+				var button = document.createElement('button');
+				button.innerHTML = m;
+				menu.appendChild(button);
 
-					if ( object instanceof THREE.CSS3DSprite ) {
+				var url = "molecules/" + MOLECULES[m];
 
-						object.element.style.display = "";
-						object.visible = true;
-
-					} else {
-
-						object.element.style.display = "none";
-						object.visible = false;
-
-					}
-
-				}
+				button.addEventListener('click', generateButtonCallback(url), false);
 
 			}
 
-			function showBonds() {
+			var b_a = document.getElementById("b_a");
+			var b_b = document.getElementById("b_b");
+			var b_ab = document.getElementById("b_ab");
 
-				for ( var i = 0; i < objects.length; i ++ ) {
+			b_a.addEventListener('click', function() {
+				visualizationType = 0;
+				showAtoms()
+			});
+			b_b.addEventListener('click', function() {
+				visualizationType = 1;
+				showBonds()
+			});
+			b_ab.addEventListener('click', function() {
+				visualizationType = 2;
+				showAtomsBonds()
+			});
 
-					var object = objects[ i ];
+		}
 
-					if ( object instanceof THREE.CSS3DSprite ) {
+		//
 
-						object.element.style.display = "none";
-						object.visible = false;
+		function showAtoms() {
 
-					} else {
+			for (var i = 0; i < objects.length; i++) {
 
-						object.element.style.display = "";
-						object.element.style.height = object.userData.bondLengthFull;
-						object.visible = true;
+				var object = objects[i];
 
-					}
-
-				}
-
-			}
-
-			function showAtomsBonds() {
-
-				for ( var i = 0; i < objects.length; i ++ ) {
-
-					var object = objects[ i ];
+				if (object instanceof THREE.CSS3DSprite) {
 
 					object.element.style.display = "";
 					object.visible = true;
 
-					if ( ! ( object instanceof THREE.CSS3DSprite ) ) {
+				} else {
 
-						object.element.style.height = object.userData.bondLengthShort;
+					object.element.style.display = "none";
+					object.visible = false;
 
-					}
+				}
+
+			}
+
+		}
+
+		function showBonds() {
+
+			for (var i = 0; i < objects.length; i++) {
+
+				var object = objects[i];
+
+				if (object instanceof THREE.CSS3DSprite) {
+
+					object.element.style.display = "none";
+					object.visible = false;
+
+				} else {
+
+					object.element.style.display = "";
+					object.element.style.height = object.userData.bondLengthFull;
+					object.visible = true;
 
 				}
 
 			}
 
-			//
+		}
 
-			function colorify( ctx, width, height, color, a ) {
+		function showAtomsBonds() {
 
-				var r = color.r;
-				var g = color.g;
-				var b = color.b;
+			for (var i = 0; i < objects.length; i++) {
 
-				var imageData = ctx.getImageData( 0, 0, width, height );
-				var data = imageData.data;
+				var object = objects[i];
 
-				for ( var y = 0; y < height; y ++ ) {
+				object.element.style.display = "";
+				object.visible = true;
 
-					for ( var x = 0; x < width; x ++ ) {
+				if (!(object instanceof THREE.CSS3DSprite)) {
 
-						var index = ( y * width + x ) * 4;
-
-						data[ index ]     *= r;
-						data[ index + 1 ] *= g;
-						data[ index + 2 ] *= b;
-						data[ index + 3 ] *= a;
-
-					}
+					object.element.style.height = object.userData.bondLengthShort;
 
 				}
 
-				ctx.putImageData( imageData, 0, 0 );
-
 			}
 
-			function imageToCanvas( image ) {
+		}
 
-				var width = image.width;
-				var height = image.height;
+		//
 
-				var canvas = document.createElement( 'canvas' );
+		function colorify(ctx, width, height, color, a) {
 
-				canvas.width = width;
-				canvas.height = height;
+			var r = color.r;
+			var g = color.g;
+			var b = color.b;
 
-				var context = canvas.getContext( '2d' );
-				context.drawImage( image, 0, 0, width, height );
+			var imageData = ctx.getImageData(0, 0, width, height);
+			var data = imageData.data;
 
-				return canvas;
+			for (var y = 0; y < height; y++) {
 
-			}
+				for (var x = 0; x < width; x++) {
 
-			//
+					var index = (y * width + x) * 4;
 
-			function loadMolecule( url ) {
-
-				for ( var i = 0; i < objects.length; i ++ ) {
-
-					var object = objects[ i ];
-					object.parent.remove( object );
+					data[index] *= r;
+					data[index + 1] *= g;
+					data[index + 2] *= b;
+					data[index + 3] *= a;
 
 				}
 
-				objects = [];
+			}
 
-				loader.load( url, function ( geometry, geometryBonds ) {
+			ctx.putImageData(imageData, 0, 0);
 
-					var offset = geometry.center();
-					geometryBonds.translate( offset.x, offset.y, offset.z );
+		}
 
-					for ( var i = 0; i < geometry.vertices.length; i ++ ) {
+		function imageToCanvas(image) {
 
-						var position = geometry.vertices[ i ];
-						var color = geometry.colors[ i ];
-						var element = geometry.elements[ i ];
+			var width = image.width;
+			var height = image.height;
 
-						if ( ! colorSpriteMap[ element ] ) {
+			var canvas = document.createElement('canvas');
 
-							var canvas = imageToCanvas( baseSprite );
-							var context = canvas.getContext( '2d' );
+			canvas.width = width;
+			canvas.height = height;
 
-							colorify( context, canvas.width, canvas.height, color, 1 );
+			var context = canvas.getContext('2d');
+			context.drawImage(image, 0, 0, width, height);
 
-							var dataUrl = canvas.toDataURL();
+			return canvas;
 
-							colorSpriteMap[ element ] = dataUrl;
+		}
 
-						}
+		//
 
-						colorSprite = colorSpriteMap[ element ];
+		function loadMolecule(url) {
 
-						var atom = document.createElement( 'img' );
-						atom.src = colorSprite;
+			for (var i = 0; i < objects.length; i++) {
 
-						var object = new THREE.CSS3DSprite( atom );
-						object.position.copy( position );
-						object.position.multiplyScalar( 75 );
-
-						object.matrixAutoUpdate = false;
-						object.updateMatrix();
-
-						root.add( object );
-
-						objects.push( object );
-
-					}
-
-					for ( var i = 0; i < geometryBonds.vertices.length; i += 2 ) {
-
-						var start = geometryBonds.vertices[ i ];
-						var end = geometryBonds.vertices[ i + 1 ];
-
-						start.multiplyScalar( 75 );
-						end.multiplyScalar( 75 );
-
-						tmpVec1.subVectors( end, start );
-						var bondLength = tmpVec1.length() - 50;
-
-
-						//
-
-						var bond = document.createElement( 'div' );
-						bond.className = "bond";
-						bond.style.height = bondLength + "px";
-
-						var object = new THREE.CSS3DObject( bond );
-						object.position.copy( start );
-						object.position.lerp( end, 0.5 );
-
-						object.userData.bondLengthShort = bondLength + "px";
-						object.userData.bondLengthFull = ( bondLength + 55 ) + "px";
-
-						//
-
-						var axis = tmpVec2.set( 0, 1, 0 ).cross( tmpVec1 );
-						var radians = Math.acos( tmpVec3.set( 0, 1, 0 ).dot( tmpVec4.copy( tmpVec1 ).normalize() ) );
-
-						var objMatrix = new THREE.Matrix4().makeRotationAxis( axis.normalize(), radians );
-						object.matrix = objMatrix;
-						object.rotation.setFromRotationMatrix( object.matrix, object.rotation.order );
-
-						object.matrixAutoUpdate = false;
-						object.updateMatrix();
-
-						root.add( object );
-
-						objects.push( object );
-
-						//
-
-						var bond = document.createElement( 'div' );
-						bond.className = "bond";
-						bond.style.height = bondLength + "px";
-
-						var joint = new THREE.Object3D( bond );
-						joint.position.copy( start );
-						joint.position.lerp( end, 0.5 );
-
-						joint.matrix.copy( objMatrix );
-						joint.rotation.setFromRotationMatrix( joint.matrix, joint.rotation.order );
-
-						joint.matrixAutoUpdate = false;
-						joint.updateMatrix();
-
-						var object = new THREE.CSS3DObject( bond );
-						object.rotation.y = Math.PI/2;
-
-						object.matrixAutoUpdate = false;
-						object.updateMatrix();
-
-						object.userData.bondLengthShort = bondLength + "px";
-						object.userData.bondLengthFull = ( bondLength + 55 ) + "px";
-
-						object.userData.joint = joint;
-
-						joint.add( object );
-						root.add( joint );
-
-						objects.push( object );
-
-					}
-
-					//console.log( "CSS3DObjects:", objects.length );
-
-					switch ( visualizationType ) {
-
-						case 0: showAtoms(); break;
-						case 1: showBonds(); break;
-						case 2: showAtomsBonds(); break;
-
-					}
-
-					render();
-
-				} );
-
+				var object = objects[i];
+				object.parent.remove(object);
 
 			}
 
-			//
+			objects = [];
 
-			function onWindowResize() {
+			loader.load(url, function(geometry, geometryBonds) {
 
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
+				var offset = geometry.center();
+				geometryBonds.translate(offset.x, offset.y, offset.z);
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				for (var i = 0; i < geometry.vertices.length; i++) {
+
+					var position = geometry.vertices[i];
+					var color = geometry.colors[i];
+					var element = geometry.elements[i];
+
+					if (!colorSpriteMap[element]) {
+
+						var canvas = imageToCanvas(baseSprite);
+						var context = canvas.getContext('2d');
+
+						colorify(context, canvas.width, canvas.height, color, 1);
+
+						var dataUrl = canvas.toDataURL();
+
+						colorSpriteMap[element] = dataUrl;
+
+					}
+
+					colorSprite = colorSpriteMap[element];
+
+					var atom = document.createElement('img');
+					atom.src = colorSprite;
+
+					var object = new THREE.CSS3DSprite(atom);
+					object.position.copy(position);
+					object.position.multiplyScalar(75);
+
+					object.matrixAutoUpdate = false;
+					object.updateMatrix();
+
+					root.add(object);
+
+					objects.push(object);
+
+				}
+
+				for (var i = 0; i < geometryBonds.vertices.length; i += 2) {
+
+					var start = geometryBonds.vertices[i];
+					var end = geometryBonds.vertices[i + 1];
+
+					start.multiplyScalar(75);
+					end.multiplyScalar(75);
+
+					tmpVec1.subVectors(end, start);
+					var bondLength = tmpVec1.length() - 50;
+
+
+					//
+
+					var bond = document.createElement('div');
+					bond.className = "bond";
+					bond.style.height = bondLength + "px";
+
+					var object = new THREE.CSS3DObject(bond);
+					object.position.copy(start);
+					object.position.lerp(end, 0.5);
+
+					object.userData.bondLengthShort = bondLength + "px";
+					object.userData.bondLengthFull = (bondLength + 55) + "px";
+
+					//
+
+					var axis = tmpVec2.set(0, 1, 0).cross(tmpVec1);
+					var radians = Math.acos(tmpVec3.set(0, 1, 0).dot(tmpVec4.copy(tmpVec1).normalize()));
+
+					var objMatrix = new THREE.Matrix4().makeRotationAxis(axis.normalize(), radians);
+					object.matrix = objMatrix;
+					object.rotation.setFromRotationMatrix(object.matrix, object.rotation.order);
+
+					object.matrixAutoUpdate = false;
+					object.updateMatrix();
+
+					root.add(object);
+
+					objects.push(object);
+
+					//
+
+					var bond = document.createElement('div');
+					bond.className = "bond";
+					bond.style.height = bondLength + "px";
+
+					var joint = new THREE.Object3D(bond);
+					joint.position.copy(start);
+					joint.position.lerp(end, 0.5);
+
+					joint.matrix.copy(objMatrix);
+					joint.rotation.setFromRotationMatrix(joint.matrix, joint.rotation.order);
+
+					joint.matrixAutoUpdate = false;
+					joint.updateMatrix();
+
+					var object = new THREE.CSS3DObject(bond);
+					object.rotation.y = Math.PI / 2;
+
+					object.matrixAutoUpdate = false;
+					object.updateMatrix();
+
+					object.userData.bondLengthShort = bondLength + "px";
+					object.userData.bondLengthFull = (bondLength + 55) + "px";
+
+					object.userData.joint = joint;
+
+					joint.add(object);
+					root.add(joint);
+
+					objects.push(object);
+
+				}
+
+				//console.log( "CSS3DObjects:", objects.length );
+
+				switch (visualizationType) {
+
+					case 0:
+						showAtoms();
+						break;
+					case 1:
+						showBonds();
+						break;
+					case 2:
+						showAtomsBonds();
+						break;
+
+				}
 
 				render();
 
-			}
+			});
 
-			function animate() {
 
-				requestAnimationFrame( animate );
-				controls.update();
+		}
 
-				var time = Date.now() * 0.0004;
+		//
 
-				root.rotation.x = time;
-				root.rotation.y = time * 0.7;
+		function onWindowResize() {
 
-				render();
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
 
-			}
+			renderer.setSize(window.innerWidth, window.innerHeight);
 
-			function render() {
+			render();
 
-				renderer.render( scene, camera );
+		}
 
-			}
+		function animate() {
 
-    </script>
-  </body>
+			requestAnimationFrame(animate);
+			controls.update();
+
+			var time = Date.now() * 0.0004;
+
+			root.rotation.x = time;
+			root.rotation.y = time * 0.7;
+
+			render();
+
+		}
+
+		function render() {
+
+			renderer.render(scene, camera);
+
+		}
+	</script>
+</body>
 
 </html>
