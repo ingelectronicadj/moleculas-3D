@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+ 
+<body>
+  <div id="viz"></div>
+  
+  <button onclick="update()">cambiar el indice de los datos</button>
+  
+  <script>
+    var idx = 0;
+    var data = [ [50,10] , [15,45], [10,10], [50,50] ];
+
+    var svg = d3.select("#viz")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", 100);    
+    
+    var rectangle = svg.append("rect")
+                          .attr("x", 0)
+                          .attr("y", 0)
+                          .attr("rx", 5)
+                          .attr("ry", 5)
+                          .attr("width", 200)
+                          .attr("height", 100)
+                          .style("fill","black");
+                          
+    
+    var myCircle = svg.selectAll("circulos")
+        .data(data[idx]).enter().append("circle")
+        .attr("r", function(d,i) {return d;})
+        .attr("cx", function(d,i) {return 50+(i*100);})
+        .attr("cy", 50) 
+        .style("fill","CornflowerBlue");
+ 
+    function update() {
+      idx++;
+      idx = idx % 4;
+      myCircle.data(data[idx])
+              .transition()
+              .attr("r",function(d){return d;});
+    }
+  </script>
+    
+</body>
+</html>
