@@ -3,96 +3,99 @@
 <meta charset="utf-8">
 <title>Un nuevo mundo por descubrir</title>
 <style>
-
-body {
-  margin: 0;
-  background: #111;
-  min-width: 960px;
-}
-
+    body {
+        margin: 0;
+        background: #111;
+        min-width: 960px;
+    }
 </style>
 <style type="text/css">
-  .boton_personalizado{
-    text-decoration: none;
-    padding: 10px;
-    font-weight: 600;
-    font-size: 20px;
-    color: #ffffff;
-    background-color: #1883ba;
-    border-radius: 6px;
-    border: 2px solid #0016b0;
-  }
-  .boton_personalizado:hover{
-    color: #1883ba;
-    background-color: #ffffff;
-  }
+    .boton_personalizado {
+        text-decoration: none;
+        padding: 10px;
+        font-weight: 600;
+        font-size: 20px;
+        color: #ffffff;
+        background-color: #1883ba;
+        border-radius: 6px;
+        border: 2px solid #0016b0;
+    }
+
+    .boton_personalizado:hover {
+        color: #1883ba;
+        background-color: #ffffff;
+    }
 </style>
 
 <body>
-<p style="text-align: center;">
-  <a href="http://www.rcsb.org/pdb/home/home.do" class="boton_personalizado">PDB Protein Data Bank</a>
-  <a href="http://localhost/nanotecnologia/Moleculas/moleculas.html" class="boton_personalizado">Interfaz para visualización de moleculas 3D</a>
-  <a href="#" class="boton_personalizado">Documento tipo papper IEEE</a>
-  <a href="https://github.com/ingelectronicadj/nanotecnologia" class="boton_personalizado">Repo</a>
-</p>
+    <p style="text-align: center;">
+        <a href="https://goo.gl/FTvblW" class="boton_personalizado">NEMS Y ESTRUCTURAS ALOTRÓPICAS DEL CARBONO</a>
+        <a href="https://goo.gl/UWVAiq" class="boton_personalizado">POSTER</a>
+        <br />
+        <br /><br />
+        <a href="http://www.rcsb.org/pdb/home/home.do" class="boton_personalizado">PDB Protein Data Bank</a>
+        <a href="http://localhost/nanotecnologia/Moleculas/moleculas.html" class="boton_personalizado">Interfaz para visualización de moleculas 3D</a>
+        <a href="https://goo.gl/rEAv1R" class="boton_personalizado">Documento tipo papper IEEE</a>
+        <a href="https://github.com/ingelectronicadj/nanotecnologia" class="boton_personalizado">Repo</a>
+    </p>
 
 
-<script src="d3/d3.v3.min.js"></script>
-<script>
+    <script src="d3/d3.v3.min.js"></script>
+    <script>
+        var width = Math.max(960, innerWidth),
+            height = Math.max(500, innerHeight);
 
-var width = Math.max(960, innerWidth),
-    height = Math.max(500, innerHeight);
+        var x1 = width / 2,
+            y1 = height / 2,
+            x0 = x1,
+            y0 = y1,
+            i = 0,
+            r = 200,
+            τ = 2 * Math.PI;
 
-var x1 = width / 2,
-    y1 = height / 2,
-    x0 = x1,
-    y0 = y1,
-    i = 0,
-    r = 200,
-    τ = 2 * Math.PI;
+        var canvas = d3.select("body").append("canvas")
+            .attr("width", width)
+            .attr("height", height)
+            .on("ontouchstart" in document ? "touchmove" : "mousemove", move);
 
-var canvas = d3.select("body").append("canvas")
-    .attr("width", width)
-    .attr("height", height)
-    .on("ontouchstart" in document ? "touchmove" : "mousemove", move);
+        var context = canvas.node().getContext("2d");
+        context.globalCompositeOperation = "lighter";
+        context.lineWidth = 2;
 
-var context = canvas.node().getContext("2d");
-context.globalCompositeOperation = "lighter";
-context.lineWidth = 2;
+        d3.timer(function() {
+            context.clearRect(0, 0, width, height);
 
-d3.timer(function() {
-  context.clearRect(0, 0, width, height);
+            var z = d3.hsl(++i % 360, 1, .5).rgb(),
+                c = "rgba(" + z.r + "," + z.g + "," + z.b + ",",
+                x = x0 += (x1 - x0) * .1,
+                y = y0 += (y1 - y0) * .1;
 
-  var z = d3.hsl(++i % 360, 1, .5).rgb(),
-      c = "rgba(" + z.r + "," + z.g + "," + z.b + ",",
-      x = x0 += (x1 - x0) * .1,
-      y = y0 += (y1 - y0) * .1;
+            d3.select({}).transition()
+                .duration(2000)
+                .ease(Math.sqrt)
+                .tween("circle", function() {
+                    return function(t) {
+                        context.strokeStyle = c + (1 - t) + ")";
+                        context.beginPath();
+                        context.arc(x, y, r * t, 0, τ);
+                        context.stroke();
+                    };
+                });
+        });
 
-  d3.select({}).transition()
-      .duration(2000)
-      .ease(Math.sqrt)
-      .tween("circle", function() {
-        return function(t) {
-          context.strokeStyle = c + (1 - t) + ")";
-          context.beginPath();
-          context.arc(x, y, r * t, 0, τ);
-          context.stroke();
-        };
-      });
-});
+        function move() {
+            var mouse = d3.mouse(this);
+            x1 = mouse[0];
+            y1 = mouse[1];
+            d3.event.preventDefault();
+        }
+    </script>
 
-function move() {
-  var mouse = d3.mouse(this);
-  x1 = mouse[0];
-  y1 = mouse[1];
-  d3.event.preventDefault();
-}
-</script>
-
-<p style="text-align: center;">
-<a class="boton_personalizado">Soy un botón</a>
-</p>
+    <p style="text-align: center;">
+        <a class="boton_personalizado">Soy un botón</a>
+    </p>
 
 
 </body>
+
 </html>
